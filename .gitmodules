@@ -1,0 +1,9 @@
+[submodule "third_party/pyalex"]
+	path = third_party/pyalex
+	url = https://github.com/J535D165/pyalex.git
+[submodule "third_party/semanticscholar"]
+	path = third_party/semanticscholar
+	url = https://github.com/danielnsilva/semanticscholar.git
+[submodule "third_party/openalex-mcp"]
+	path = third_party/openalex-mcp
+	url = https://github.com/oksure/openalex-research-mcp.git
