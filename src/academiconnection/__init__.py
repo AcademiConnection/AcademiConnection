@@ -10,5 +10,11 @@ __version__ = "0.1.0"
 from .openalex_client import OpenAlexClient
 from .semantic_scholar_client import SemanticScholarClient
 from .network_builder import NetworkBuilder
+from .relationship_finder import RelationshipFinder
 
-__all__ = ["OpenAlexClient", "SemanticScholarClient", "NetworkBuilder"]
+__all__ = [
+    "OpenAlexClient",
+    "SemanticScholarClient",
+    "NetworkBuilder",
+    "RelationshipFinder",
+]
