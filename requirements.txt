@@ -1,0 +1,16 @@
+# Core dependencies
+requests>=2.28.0
+httpx>=0.24.0
+
+# OpenAlex API (via submodule third_party/pyalex)
+# Install with: pip install -e third_party/pyalex
+
+# Semantic Scholar API (via submodule third_party/semanticscholar)
+# Install with: pip install -e third_party/semanticscholar
+
+# Network analysis and visualization
+networkx>=3.0
+pyvis>=0.3.0
+
+# Utilities
+python-dotenv>=1.0.0
