@@ -7,3 +7,6 @@
 [submodule "third_party/openalex-mcp"]
 	path = third_party/openalex-mcp
 	url = https://github.com/oksure/openalex-research-mcp.git
+[submodule "pages"]
+	path = pages
+	url = git@github.com:AcademiConnection/AcademiConnection.github.io.git
