@@ -1,0 +1,59 @@
+name: Bump Submodules
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current submodule hash
+        id: old
+        run: |
+          HASH=$(git -C pages rev-parse HEAD)
+          echo "hash=${HASH:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Update submodule
+        run: git submodule update --remote pages
+
+      - name: Get new submodule hash
+        id: new
+        run: |
+          HASH=$(git -C pages rev-parse HEAD)
+          echo "hash=${HASH:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "deps: bump pages from ${{ steps.old.outputs.hash }} to ${{ steps.new.outputs.hash }}"
+          title: "deps: bump pages from ${{ steps.old.outputs.hash }} to ${{ steps.new.outputs.hash }}"
+          body: |
+            自动检测到 `pages` submodule 有新提交，已更新指针。
+
+            - 旧版本：`${{ steps.old.outputs.hash }}`
+            - 新版本：`${{ steps.new.outputs.hash }}`
+          branch: auto-bump/pages-${{ steps.new.outputs.hash }}
+          delete-branch: true
